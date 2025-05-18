@@ -1,8 +1,4 @@
 ## drawbot
-**made for hack club highway**
-kinda like blot i guess
-but not
-its mine
-i make it
-and design it
-ok bye
+ - Made for [Hack Club Highway](https://highway.hackclub.com/)
+ - I never got a blot and I want a drawing machine
+ - Im going to design and make one myself, with hopefully more speed and a bigger draw area if I have enough money to do so
