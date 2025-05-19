@@ -12,3 +12,9 @@
         - Stepper Motor Nema 17
         - 5M GT2 Timing Belt 6mm Width
         - Stepper Motor Driver Module
+
+**19/5/25** *time spent: 20 mins*
+ - updated [journal](https://github.com/EwoudVV/drawbot/commit/50e35cfa68b8b6b28bf3ccec420033e38243821c) from yesterday
+ - update bom
+    - more misc items like screws, servo, bearings etc that i will need, found good links for those
+    - made some small changes
