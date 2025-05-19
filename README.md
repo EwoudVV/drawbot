@@ -1,4 +1,24 @@
-## drawbot
+## Drawbot
  - Made for [Hack Club Highway](https://highway.hackclub.com/)
  - I never got a blot and I want a drawing machine
- - Im going to design and make one myself, with hopefully more speed and a bigger draw area if I have enough money to do so
+### Goals:
+ - Print size letter paper or larger
+ - Fast speed
+     - CoreXY
+         - Pros:
+             - much faster
+             - steppers are stationary
+             - one belt
+             - less weight on moving parts (stuff around pen)
+             - therefore, more possible acceleration and speed
+         - Cons:
+             - much more complicated
+                - harder to design
+                - harder to manufacture
+             - more parts
+             - more expensive
+     - High speed stepper motors
+     - High speed servo for pen up and down
+     - Good firmware to get the most speed out of the steppers
+ - Cheap
+ - Open source (obv)
