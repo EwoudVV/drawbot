@@ -19,3 +19,6 @@
     - more misc items like screws, servo, bearings etc that i will need, found good links for those
     - made some small changes
  - made a nice readme, can update more [[commit](https://github.com/EwoudVV/drawbot/commit/9d6c27ab3a7f5787f335faa75507cd3d0add2d44)]
+
+**21/5/25** *time spent: 15 mins*
+ - found some nice limit switches for homing on digikey, updated bom
