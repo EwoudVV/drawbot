@@ -6,7 +6,7 @@ created_at: "2025-05-25"
 ---
 
 ## Journal
-**18/5/25** *time spent: 1hr*
+**18/5/25** *time spent: 1 hr*
  - repo created, organized it
  - made pr to highway repo
  - made bom
@@ -35,7 +35,7 @@ created_at: "2025-05-25"
  - started designing
  - <img width="622" alt="image" src="https://github.com/user-attachments/assets/43933af5-9d0d-4029-b5b1-4ff4d70892e5" />
 
-**24/5/25** *time spent: 30 mins*
+**24/5/25** *time spent: 1 hr*
  - researched how to do stuff with aluminum extrusions
  - looked at my printer for inspiration on how to connect those
  - most of the connectors i found required tapping, which i dont have tools for
@@ -43,3 +43,7 @@ created_at: "2025-05-25"
      - parts include connection parts to connect the extrusions securely
          - they slide in to the v part, and then i tighten them with grub screws so that no tapping threads is required
      - also wheel rollers, 2 bases for them (4 rollers each) and adjusting nuts for the wheel. the rollers roll on the aluminum extrusions, a base on each side. The linear bearings are connected to those for the other axis.
+
+ - update: i found much cheaper parts, specifically for the roller. amazon had a pack of 2 of the whole thing (rollers, adjusters and plate included) for much cheaper than what i first found
+ - i also found cheaper aluminum extrusions, that even came with connecter things and screws, so more stuff for less price
+ - also got rid of the 12v 2a power supply, it wasnt neccessary bc i have a variable power supply that i can use
