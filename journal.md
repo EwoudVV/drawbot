@@ -1,3 +1,10 @@
+---
+title: "drawbot"
+author: "Ewoud Van Vooren"
+description: "A drawing machine that is as fast and as cheap as possible"
+created_at: "2025-05-25"
+---
+
 ## Journal
 **18/5/25** *time spent: 1hr*
  - repo created, organized it
