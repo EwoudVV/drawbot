@@ -22,3 +22,8 @@
 
 **21/5/25** *time spent: 15 mins*
  - found some nice limit switches for homing on digikey, updated bom
+
+**23/5/25** *time spent: 20 mins*
+ - found stl files for some parts
+ - started designing
+ - <img width="622" alt="image" src="https://github.com/user-attachments/assets/43933af5-9d0d-4029-b5b1-4ff4d70892e5" />
