@@ -43,7 +43,11 @@ created_at: "2025-05-25"
      - parts include connection parts to connect the extrusions securely
          - they slide in to the v part, and then i tighten them with grub screws so that no tapping threads is required
      - also wheel rollers, 2 bases for them (4 rollers each) and adjusting nuts for the wheel. the rollers roll on the aluminum extrusions, a base on each side. The linear bearings are connected to those for the other axis.
-
  - update: i found much cheaper parts, specifically for the roller. amazon had a pack of 2 of the whole thing (rollers, adjusters and plate included) for much cheaper than what i first found
  - i also found cheaper aluminum extrusions, that even came with connecter things and screws, so more stuff for less price
  - also got rid of the 12v 2a power supply, it wasnt neccessary bc i have a variable power supply that i can use
+
+**14/6/25** *time spent: 1hr*
+ - designed more: <img width="1265" alt="image" src="https://github.com/user-attachments/assets/774a2857-dc24-4615-b987-1174145fadbc" />
+ - i designed a rough thing of what the roller plates would look like on the extrusions with the right dimensions, and put the linear motion rods in the right place
+ - i looked at the reviews for some of the parts listings, and i found that the roller plate had bad reviews (almost everyone said it was assembled wrong, bad quality) so i found a better brand that had much better reviews and that was even cheaper.
