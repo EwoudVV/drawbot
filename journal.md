@@ -54,3 +54,6 @@ created_at: "2025-05-25"
 
 **27/6/25** *time spent: 30 mins*
  - made a better replica of the sliding gantry plate on the aluminum extrusions so i can better model a mount for the linear bearings: <img width="1387" alt="image" src="https://github.com/user-attachments/assets/4a0390bf-32ba-41c9-b8ae-36078373de46" />
+
+**29/6/25** *time spent: 1 hr*
+ - i designed a plate for in between the aluminum gantry plate and the linear bearing holders (which i found the stl for), and it has screw holes with countersunk things for the screws. I also aligned everything perfectly.<img width="1289" alt="image" src="https://github.com/user-attachments/assets/5605d525-b185-4258-bc7f-7cbaacfb7c3b" />
