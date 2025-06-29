@@ -51,3 +51,6 @@ created_at: "2025-05-25"
  - designed more: <img width="1265" alt="image" src="https://github.com/user-attachments/assets/774a2857-dc24-4615-b987-1174145fadbc" />
  - i designed a rough thing of what the roller plates would look like on the extrusions with the right dimensions, and put the linear motion rods in the right place
  - i looked at the reviews for some of the parts listings, and i found that the roller plate had bad reviews (almost everyone said it was assembled wrong, bad quality) so i found a better brand that had much better reviews and that was even cheaper.
+
+**27/6/25** *time spent: 30 mins*
+ - made a better replica of the sliding gantry plate on the aluminum extrusions so i can better model a mount for the linear bearings: <img width="1387" alt="image" src="https://github.com/user-attachments/assets/4a0390bf-32ba-41c9-b8ae-36078373de46" />
