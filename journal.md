@@ -33,7 +33,7 @@ created_at: "2025-05-25"
 **23/5/25** *time spent: 20 mins*
  - found stl files for some parts
  - started designing
- - <img width="622" alt="image" src="https://github.com/user-attachments/assets/43933af5-9d0d-4029-b5b1-4ff4d70892e5" />
+ - <img width="600" alt="image" src="https://github.com/user-attachments/assets/43933af5-9d0d-4029-b5b1-4ff4d70892e5" />
 
 **24/5/25** *time spent: 1 hr*
  - researched how to do stuff with aluminum extrusions
@@ -48,12 +48,24 @@ created_at: "2025-05-25"
  - also got rid of the 12v 2a power supply, it wasnt neccessary bc i have a variable power supply that i can use
 
 **14/6/25** *time spent: 1hr*
- - designed more: <img width="1265" alt="image" src="https://github.com/user-attachments/assets/774a2857-dc24-4615-b987-1174145fadbc" />
+ - designed more:
+ - <img width="600" alt="image" src="https://github.com/user-attachments/assets/774a2857-dc24-4615-b987-1174145fadbc" />
  - i designed a rough thing of what the roller plates would look like on the extrusions with the right dimensions, and put the linear motion rods in the right place
  - i looked at the reviews for some of the parts listings, and i found that the roller plate had bad reviews (almost everyone said it was assembled wrong, bad quality) so i found a better brand that had much better reviews and that was even cheaper.
 
 **27/6/25** *time spent: 30 mins*
- - made a better replica of the sliding gantry plate on the aluminum extrusions so i can better model a mount for the linear bearings: <img width="1387" alt="image" src="https://github.com/user-attachments/assets/4a0390bf-32ba-41c9-b8ae-36078373de46" />
+ - made a better replica of the sliding gantry plate on the aluminum extrusions so i can better model a mount for the linear bearings: <img width="600" alt="image" src="https://github.com/user-attachments/assets/4a0390bf-32ba-41c9-b8ae-36078373de46" />
 
 **29/6/25** *time spent: 1 hr*
- - i designed a plate for in between the aluminum gantry plate and the linear bearing holders (which i found the stl for), and it has screw holes with countersunk things for the screws. I also aligned everything perfectly.<img width="1289" alt="image" src="https://github.com/user-attachments/assets/5605d525-b185-4258-bc7f-7cbaacfb7c3b" />
+ - i designed a plate for in between the aluminum gantry plate and the linear bearing holders (which i found the stl for), and it has screw holes with countersunk things for the screws. I also aligned everything perfectly.<img width="600" alt="image" src="https://github.com/user-attachments/assets/5605d525-b185-4258-bc7f-7cbaacfb7c3b" />
+
+**1/7/25** *time spent: 3 hrs*
+ - i made the part for the pen lifting system
+ - <img width="600" alt="image" src="https://github.com/user-attachments/assets/dae794d0-8a83-4818-abe7-e4049825630b" />
+ - first i made the base, which screws on to the bottom of the linear bearings. i made a hole for the pen with a bit bigger diameter for the pen (which i chose to be a Bic Round Stic because it is simple and cylindrical) and i put an extrusion on the bottom of the plate for the pen so it would wobble less.
+ - i put a mounting place for the servo
+ - for moving the pen up and down, i used a mechanism called a [scotch yoke](https://www.youtube.com/watch?v=4iP_ZPBduSo). it converts rotational movement from the servo into linear movement for the pen.
+ - i made the clamp for the screw, which has tabs on the end of the piece that wraps around the pen and is attached to part of the scotch yoke mechanism, and to tighten it, i will put a bolt and nut into the tabs and tighten it around the pen so that it stays in place well.
+ - i also tried to remove unnessecary sections of the plate, because i want the draw bot to move fast and have high acceleration, so it needs less mass on the moving parts.
+ - <img width="600" alt="image" src="https://github.com/user-attachments/assets/dac6b701-ace8-42c6-bad9-9bec1c4f182e" />
+ - <img width="600" alt="image" src="https://github.com/user-attachments/assets/707ed2c8-0a09-47f8-b3e5-42600efe9fb4" />
