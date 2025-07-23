@@ -69,3 +69,17 @@ created_at: "2025-05-25"
  - i also tried to remove unnessecary sections of the plate, because i want the draw bot to move fast and have high acceleration, so it needs less mass on the moving parts.
  - <img width="600" alt="image" src="https://github.com/user-attachments/assets/dac6b701-ace8-42c6-bad9-9bec1c4f182e" />
  - <img width="600" alt="image" src="https://github.com/user-attachments/assets/707ed2c8-0a09-47f8-b3e5-42600efe9fb4" />
+
+**23/7/25** *time spent: 15 hrs*
+ - kind of a while since my last journal entry but I finished it!
+ - I finished the belt system
+    - I put idler and drive wheels in the places that they needed to go
+    - <img width="896" height="262" alt="image" src="https://github.com/user-attachments/assets/939d7a3b-de5a-48a5-a106-25587f4845be" />
+    - I made spots to clamp the belt and the toolhead. The timing belt comes with the clamps.
+    - <img width="659" height="305" alt="image" src="https://github.com/user-attachments/assets/251056c5-2044-490f-b1c0-49576f930c40" />
+    - I made attatchments at the opposite corners of the motors where idler wheels will go. They attatch to the aluminum extrusions
+    - <img width="565" height="488" alt="image" src="https://github.com/user-attachments/assets/6c6d8e55-384c-4f3b-abd0-07393abc1cc7" />
+    - I reasearched the CoreXY/cartesian belt design and layed out where the belts would go on the drawing machine, and color coded both of them. I also calculated the lengths of the belts to total to about 4.5 meters, which is good because the belt i will buy is 5 meters.
+    - <img width="1109" height="653" alt="image" src="https://github.com/user-attachments/assets/7297f1ad-89dc-468e-821e-04ccabdaa496" />
+    - I made attatchements on the other 2 corners for the stepper motor base. I copied the attatchment design for the other side and used it, and made a base.
+    - <img width="497" height="414" alt="image" src="https://github.com/user-attachments/assets/345fb99f-b63f-4ef2-ae5b-58deeeaf0577" />
