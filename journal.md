@@ -83,3 +83,10 @@ created_at: "2025-05-25"
     - <img width="1109" height="653" alt="image" src="https://github.com/user-attachments/assets/7297f1ad-89dc-468e-821e-04ccabdaa496" />
     - I made attatchements on the other 2 corners for the stepper motor base. I copied the attatchment design for the other side and used it, and made a base.
     - <img width="497" height="414" alt="image" src="https://github.com/user-attachments/assets/345fb99f-b63f-4ef2-ae5b-58deeeaf0577" />
+
+**25/7/25** *time spent: 1 hr*
+ - (Im combining stuff I did recently)
+ - Im doing final checks from the website before submitting
+ - I uploaded some images of the design in the new folder
+ - I designed the wiring diagram for the stepper motor drivers and the arduino (which i already have, so i dont need to add it to the bom)
+ - <img width="866" height="854" alt="schematic" src="https://github.com/user-attachments/assets/17e3ca47-1548-45f0-8598-33b0a1f5de7f" />
