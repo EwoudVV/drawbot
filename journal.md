@@ -7,7 +7,7 @@ created_at: "2025-05-25"
 
 ## Journal
 
-### Total time spent: 24hrs and 35 mins
+### Total time spent: 25hrs and 35 mins
 
 **18/5/25** *time spent: 1 hr*
  - repo created, organized it
