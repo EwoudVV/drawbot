@@ -93,3 +93,6 @@ created_at: "2025-05-25"
  - I uploaded some images of the design in the new folder
  - I designed the wiring diagram for the stepper motor drivers and the arduino (which i already have, so i dont need to add it to the bom)
  - <img width="866" height="854" alt="schematic" src="https://github.com/user-attachments/assets/17e3ca47-1548-45f0-8598-33b0a1f5de7f" />
+
+**25/7/25** *time spent: 1hr*
+ - I coded some code for the drawing machine. It homes it, then goes to coordinates specified in the serial monitor. [[commit](https://github.com/EwoudVV/drawbot/commit/557fd0dd407ad2a281d6dc4d6faa46b979bcdcc2)]
