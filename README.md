@@ -6,6 +6,8 @@
  - This project is a 0.5 meter square drawing machine that I designed to be as fast and cheap as possible.
  - I made this project because I wanted to learn more about designing and using mechanisms, like the CoreXY belt design I used and the scotch-yoke mechanism used to lift the pen. I also wanted something functional, that I would use.
 
+### Bill Of Materials
+
 |Part                       |Qty|Price               |Desc                                                   |Notes                                                                                 |Link                                                                                     |
 |---------------------------|---|--------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
 |500mm Aluminium Extrusion  |4  |$25.99              |500m V-slot aluminum extrusions                        |They come with extra accessories like connectors                                      |https://www.amazon.com/Seekliny-Aluminum-Extrusion-V-Slotted-Accessories/dp/B0DY7FKXZ9/  |
