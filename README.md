@@ -6,6 +6,10 @@
  - This project is a 0.5 meter square drawing machine that I designed to be as fast and cheap as possible.
  - I made this project because I wanted to learn more about designing and using mechanisms, like the CoreXY belt design I used and the scotch-yoke mechanism used to lift the pen. I also wanted something functional, that I would use.
 
+### Pictures
+
+<img width="974" height="745" alt="image" src="https://github.com/user-attachments/assets/42e3cf4b-3940-47e7-81be-0ef90861e768" />
+
 ### Bill Of Materials
 
 |Part                       |Qty|Price                    |Desc                                                   |Notes                                                                                 |Link                                                                                     |
