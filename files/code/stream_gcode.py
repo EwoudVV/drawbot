@@ -1,29 +1,16 @@
 """
 Stream G-code to an ESP32 plotter over USB serial.
 
-Behavior:
 - Opens a serial port.
-- Waits for "ok" from the device (optional at start).
 - Sends one non-empty line at a time.
 - Waits for "ok" after each line.
 - Stops immediately on "error:" from the device.
 
-Usage (macOS):
-  1) Install pyserial:
-       python3 -m pip install --user pyserial
+ls /dev/cu.* | grep -i usb
 
-  2) Find your port:
-       ls /dev/cu.* | grep -i usb
-     Common examples:
-       /dev/cu.usbserial-xxxx
-       /dev/cu.SLAB_USBtoUART
-       /dev/cu.wchusbserialxxxx
+python3 stream_gcode.py --port /dev/cu.usbserial-xxxx --baud 115200 --file job.gcode
 
-  3) Run:
-       python3 stream_gcode.py --port /dev/cu.usbserial-xxxx --baud 115200 --file job.gcode
-
-Tips:
-- Your G-code file should start with:
+G-code file should start with
     G21
     G90
     M5
@@ -113,16 +100,14 @@ def stream_gcode(
         return
 
     with serial.Serial(port, baudrate=baud, timeout=0.1) as ser:
-        # Fresh connection. Some boards reboot on serial open. Give it a moment.
         time.sleep(1.5)
         ser.reset_input_buffer()
         ser.reset_output_buffer()
 
-        # Optional: wait for initial ok (your firmware prints "ok" after homing).
         try:
             wait_for_ok_or_error(ser, start_timeout_s, verbose=verbose)
         except TimeoutError:
-            # Not fatal. Some firmware might not send an initial ok.
+            # Some firmware might not send an initial ok.
             if verbose:
                 print("! No initial ok seen. Proceeding anyway.")
 
