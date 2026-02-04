@@ -1,12 +1,16 @@
 Part,Qty,Price,Desc,Notes,Link
-500mm Aluminium Extrusion,4,$25.99,500m v-slot aluminum extrusions,they come with connectors and stuff,https://www.amazon.com/Seekliny-Aluminum-Extrusion-V-Slotted-Accessories/dp/B0DY7FKXZ9/
-Linear Motion Rod Shaft,2,$29.99,linear shaft,,https://www.amazon.com/uxcell-Bearing-Support-Automated-Machines/dp/B0CK4Z3M15
-Linear Ball Bearings,12,$10.99,,for on the shaft,https://www.amazon.com/quality-Linear-Bearing-Bushing-Printer/dp/B00X75QGGC
-Stepper Motor Nema 17,2,$25.99,nema 17 stepper motor,high torque,https://www.amazon.com/Stepper-Motor-Bipolar-64oz-Printer/dp/B00PNEQI7W
-Timing Belt,1,$14.99,5m timing belt,extra accessories included,https://www.amazon.com/KeeYees-Timing-Tensioner-Torsion-Printer/dp/B07JKT5BZQ
-Stepper Motor Driver Module,2,$7.59,stepper motor drivers,,https://www.amazon.com/Stepper-Printer-StepStick-Envistia-Mall/dp/B07QT7N3T2
-Servo,1,$11.99,fast servo.metal gears.small,needs to be fast for the pen up and down,https://vorpal-robotics-store.myshopify.com/products/vorpal-brand-mg90-micro-servos
-Limit switches,2,$5.56,SS-5GL02,,https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/SS-5GL02/3102937
-roller plate,2,$12.98,roller plates for attachment on the aluminum extrusions,much less expensive than the previous ones i found also its a pack of 2,https://www.amazon.com/SeekLiny-Gantry-Wheels-Aluminum-Extrusion/dp/B0CX7TQQVK/
-,,SUBTOTAL: $146.07,,,
-,,GRAND TOTAL: $155.20,,,
+Arduino,1,$29.30,Uno R3,not going to buy,http://store.arduino.cc/collections/boards-modules/products/arduino-uno-rev3
+Pen,60,$7.99,Bic Round Stic,not going to buy,https://us.bic.com/en_us/bic-round-stic-xtra-life-ball-point-pen-black-60-pack.html
+500mm Aluminium Extrusion,4,$25.99,500m V-slot aluminum extrusions,They come with extra accessories like connectors,https://www.amazon.com/Seekliny-Aluminum-Extrusion-V-Slotted-Accessories/dp/B0DY7FKXZ9/
+Linear Motion Rod Shaft,2,$29.99,Linear shaft for the toolhead to move on,Comes with bearings for the toolhead,https://www.amazon.com/uxcell-Bearing-Support-Automated-Machines/dp/B0CK4Z3M15
+Stepper Motor Nema 17,2,$25.99,Motors to drive the gantry,High torque and high speed,https://www.amazon.com/Stepper-Motor-Bipolar-64oz-Printer/dp/B00PNEQI7W
+Timing Belt,1,$14.99,5m belt,Extra accessories included like driver and idler wheels and belt clamps and tensioners,https://www.amazon.com/KeeYees-Timing-Tensioner-Torsion-Printer/dp/B07JKT5BZQ
+Stepper Motor Driver Module,2,$7.59,Stepper motor drivers,,https://www.amazon.com/Stepper-Printer-StepStick-Envistia-Mall/dp/B07QT7N3T2
+Servo,1,$2.99,Fast servo that has metal gears and is small,,https://speedyfpv.com/products/mg90d-metal-digital-servo-new?variant=45194443030742
+Limit switches,2,$5.56,SS-5GL02,For homing the toolhead,https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/SS-5GL02/3102937
+Roller plate,2,$11.97,Roller plates for attachment on the aluminum extrusions,Adjustable,https://www.amazon.com/QWORK-V-Wheel-Aluminum-Profile-Printer/dp/B0CHRYLV1V
+Belt idler wheels,5,$7.99,Idler wheels for when the belt turns,4 extra are needed,https://www.amazon.com/Timing-Belt-Idler-Pulley-Printer/dp/B0BSPCHTD3
+,,SUBTOTAL: $133.06,no extras,,
+,,TOTAL: $141.38,no extras and tax,assumes MA sales tax,
+,,GRAND TOTAL: $170.35,extras,,
+,,GRAND GRAND TOTAL: $181.00,extras and tax,assumes MA sales tax,
