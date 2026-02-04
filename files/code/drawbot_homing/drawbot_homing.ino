@@ -1,23 +1,19 @@
 /*
-  ESP32 CoreXY pen plotter: minimal G-code interpreter (absolute, mm)
-
-  Supported:
-    G21                ; set mm units (required before motion)
-    G90                ; absolute mode (required before motion)
+    G21                ; set mm units
+    G90                ; absolute mode
     G0 X.. Y.. [F..]   ; travel (forces pen up)
     G1 X.. Y.. [F..]   ; draw   (forces pen down)
     M3                 ; pen down
     M5                 ; pen up
     M2 / M30           ; end (pen up, stop)
 
-  Notes:
     - F is interpreted as mm/min.
     - Coordinates are clamped to the workspace.
     - Any error stops execution permanently until reset.
     - Executes line-by-line over Serial and replies "ok" per line.
     - Homes on boot: left until X switch, then down until Y switch.
 
-  Your pins:
+  Pins:
     MS1=18 MS2=19 MS3=21
     Left motor:  STEP_L=32 DIR_L=33
     Right motor: STEP_R=26 DIR_R=25
@@ -55,14 +51,13 @@ constexpr int SERVO_PIN = 27;
 constexpr float X_MAX_MM = 400.0f;
 constexpr float Y_MAX_MM = 320.0f;
 
-// Your corrected calibration base (axis-step units per mm at full step)
+// Calibration base (axis-step units per mm at full step)
 constexpr float BASE_STEPS_PER_MM_FULLSTEP = 10.0f;
 
-// Microstepping choice for v1 (fixed)
+// Microstepping choice
 constexpr int MICROSTEP_FACTOR = 8;
 
-// ---------------- Motor capability model ----------------
-// 200 RPM marketing spec, 200 full steps/rev typical
+// 200 RPM spec, 200 full steps/rev
 constexpr float MOTOR_MAX_RPM = 200.0f;
 constexpr float MOTOR_FULL_STEPS_PER_REV = 200.0f;
 constexpr float MOTOR_MAX_FULLSTEP_SPS =
@@ -138,7 +133,6 @@ static inline bool swPressed(int pin) {
 }
 
 static inline void setMotorDirs(bool dirL_forward, bool dirR_forward) {
-  // forward=true corresponds to your measured "+" directions:
   // L+: up-right, R+: down-right
   digitalWrite(DIR_L, dirL_forward ? HIGH : LOW);
   digitalWrite(DIR_R, dirR_forward ? HIGH : LOW);
@@ -196,7 +190,6 @@ void setFeedMmMin(float f_mm_min) {
   float axis_sps = v_mm_s * stepsPerMmEffective();
 
   // Conservative clamp to motor capability:
-  // axis_sps ~ 2 * motor_sps worst-case in our mapping, so cap axis_sps to 2*max motor.
   float axis_sps_cap = 2.0f * MOTOR_MAX_MICROSTEP_SPS;
   if (axis_sps > axis_sps_cap) axis_sps = axis_sps_cap;
 
@@ -223,7 +216,6 @@ void penDown() {
 }
 
 // ---------------- CoreXY diagonal move ----------------
-// Using your measured basis:
 // L+ => (+x,+y), R+ => (+x,-y)
 //
 // dx_steps = sL + sR
