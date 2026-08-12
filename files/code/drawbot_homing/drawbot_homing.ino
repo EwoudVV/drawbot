@@ -1,15 +1,20 @@
 /*
-    G21                ; set mm units
-    G90                ; absolute mode
+  ESP32 CoreXY pen plotter: minimal G-code interpreter (absolute, mm)
+  Updated:
+    - On M2/M30: pen up, HOME (left then down), reset modal state, keep accepting more jobs.
+    - Still stops permanently on "error:" until reset.
+
+  Supported:
+    G21                ; set mm units (required before motion)
+    G90                ; absolute mode (required before motion)
     G0 X.. Y.. [F..]   ; travel (forces pen up)
     G1 X.. Y.. [F..]   ; draw   (forces pen down)
     M3                 ; pen down
     M5                 ; pen up
-    M2 / M30           ; end (pen up, stop)
+    M2 / M30           ; end job (pen up, home, ready)
 
     - F is interpreted as mm/min.
     - Coordinates are clamped to the workspace.
-    - Any error stops execution permanently until reset.
     - Executes line-by-line over Serial and replies "ok" per line.
     - Homes on boot: left until X switch, then down until Y switch.
 
@@ -17,8 +22,8 @@
     MS1=18 MS2=19 MS3=21
     Left motor:  STEP_L=32 DIR_L=33
     Right motor: STEP_R=26 DIR_R=25
-    Limit X-left: GPIO34 (pressed -> GND, needs external pullup)
-    Limit Y-down: GPIO35 (pressed -> GND, needs external pullup)
+    Limit X-left: GPIO34 (pressed -> GND, needs external pullup to 3.3V)
+    Limit Y-down: GPIO35 (pressed -> GND, needs external pullup to 3.3V)
     Servo: GPIO27 (powered from 5 V buck, common GND)
 
   Limit switch pullups:
@@ -37,10 +42,10 @@ constexpr int MS2_PIN = 19;
 constexpr int MS3_PIN = 21;
 
 constexpr int STEP_L = 32;
-constexpr int DIR_L  = 33;
+constexpr int DIR_L = 33;
 
 constexpr int STEP_R = 26;
-constexpr int DIR_R  = 25;
+constexpr int DIR_R = 25;
 
 constexpr int LIMIT_X_LEFT = 34;
 constexpr int LIMIT_Y_DOWN = 35;
@@ -54,25 +59,24 @@ constexpr float Y_MAX_MM = 320.0f;
 // Calibration base (axis-step units per mm at full step)
 constexpr float BASE_STEPS_PER_MM_FULLSTEP = 10.0f;
 
-// Microstepping choice
+// Fixed microstepping for v1
 constexpr int MICROSTEP_FACTOR = 8;
 
-// 200 RPM spec, 200 full steps/rev
+// ---------------- Motor capability model ----------------
 constexpr float MOTOR_MAX_RPM = 200.0f;
 constexpr float MOTOR_FULL_STEPS_PER_REV = 200.0f;
 constexpr float MOTOR_MAX_FULLSTEP_SPS =
     (MOTOR_MAX_RPM * MOTOR_FULL_STEPS_PER_REV) / 60.0f;  // ~666.7 full-steps/s
-constexpr float MOTOR_MAX_MICROSTEP_SPS = MOTOR_MAX_FULLSTEP_SPS * MICROSTEP_FACTOR;
+constexpr float MOTOR_MAX_MICROSTEP_SPS =
+    MOTOR_MAX_FULLSTEP_SPS * MICROSTEP_FACTOR;
 
 // ---------------- Timing ----------------
 constexpr uint16_t PULSE_US = 8;
 
 // Default feedrates (mm/min)
 constexpr float FEED_TRAVEL_MM_MIN = 3000.0f;
-constexpr float FEED_DRAW_MM_MIN   = 1200.0f;
-
-// Homing feedrate (mm/min) (slow)
-constexpr float FEED_HOME_MM_MIN   = 600.0f;
+constexpr float FEED_DRAW_MM_MIN = 1200.0f;
+constexpr float FEED_HOME_MM_MIN = 600.0f;
 
 constexpr uint32_t MAX_HOME_STEPS = 400000;
 
@@ -80,7 +84,9 @@ constexpr uint32_t MAX_HOME_STEPS = 400000;
 constexpr int SERVO_HZ = 50;
 constexpr int SERVO_MIN_US = 500;
 constexpr int SERVO_MAX_US = 2500;
-constexpr int PEN_UP_US   = 1000;
+
+// Your calibration
+constexpr int PEN_UP_US = 1000;
 constexpr int PEN_DOWN_US = 2000;
 
 // ---------------- State ----------------
@@ -90,15 +96,13 @@ bool units_mm = false;
 bool absolute_mode = false;
 bool stopped = false;
 
-bool pen_down = false;
-
 float cur_x_mm = 0.0f;
 float cur_y_mm = 0.0f;
 
 float current_feed_mm_min = FEED_TRAVEL_MM_MIN;
-uint32_t step_low_delay_us = 2000;  // computed from feed
+uint32_t step_low_delay_us = 2000;
 
-// ---------------- G-code parsing types ----------------
+// ---------------- Parsing ----------------
 struct ParsedLine {
   bool hasG = false;
   int g = -1;
@@ -128,7 +132,6 @@ static inline int32_t iround(float x) {
 }
 
 static inline bool swPressed(int pin) {
-  // GPIO34/35: input-only, no internal pullups. Must be external pullup.
   return digitalRead(pin) == LOW;
 }
 
@@ -154,7 +157,7 @@ static inline void pulseBoth() {
   delayMicroseconds(step_low_delay_us);
 }
 
-float stepsPerMmEffective() {
+static inline float stepsPerMmEffective() {
   return BASE_STEPS_PER_MM_FULLSTEP * (float)MICROSTEP_FACTOR;
 }
 
@@ -167,11 +170,11 @@ void setMicrosteppingFixed() {
   // 1/16 : H H H
   bool ms1 = LOW, ms2 = LOW, ms3 = LOW;
 
-  if (MICROSTEP_FACTOR == 1)      { ms1 = LOW;  ms2 = LOW;  ms3 = LOW; }
-  else if (MICROSTEP_FACTOR == 2) { ms1 = HIGH; ms2 = LOW;  ms3 = LOW; }
-  else if (MICROSTEP_FACTOR == 4) { ms1 = LOW;  ms2 = HIGH; ms3 = LOW; }
+  if (MICROSTEP_FACTOR == 1) { ms1 = LOW; ms2 = LOW; ms3 = LOW; }
+  else if (MICROSTEP_FACTOR == 2) { ms1 = HIGH; ms2 = LOW; ms3 = LOW; }
+  else if (MICROSTEP_FACTOR == 4) { ms1 = LOW; ms2 = HIGH; ms3 = LOW; }
   else if (MICROSTEP_FACTOR == 8) { ms1 = HIGH; ms2 = HIGH; ms3 = LOW; }
-  else if (MICROSTEP_FACTOR == 16){ ms1 = HIGH; ms2 = HIGH; ms3 = HIGH; }
+  else if (MICROSTEP_FACTOR == 16) { ms1 = HIGH; ms2 = HIGH; ms3 = HIGH; }
 
   digitalWrite(MS1_PIN, ms1);
   digitalWrite(MS2_PIN, ms2);
@@ -183,20 +186,14 @@ void setFeedMmMin(float f_mm_min) {
 
   current_feed_mm_min = f_mm_min;
 
-  // Convert to mm/s
   float v_mm_s = f_mm_min / 60.0f;
-
-  // Convert to axis-step-units/s
   float axis_sps = v_mm_s * stepsPerMmEffective();
 
-  // Conservative clamp to motor capability:
+  // Conservative clamp to motor capability
   float axis_sps_cap = 2.0f * MOTOR_MAX_MICROSTEP_SPS;
   if (axis_sps > axis_sps_cap) axis_sps = axis_sps_cap;
 
-  // period per axis-step (microseconds)
   float period_us = 1000000.0f / axis_sps;
-
-  // LOW time = period - PULSE
   float low_us = period_us - (float)PULSE_US;
   if (low_us < 50.0f) low_us = 50.0f;
 
@@ -206,13 +203,11 @@ void setFeedMmMin(float f_mm_min) {
 void penUp() {
   penServo.writeMicroseconds(PEN_UP_US);
   delay(200);
-  pen_down = false;
 }
 
 void penDown() {
   penServo.writeMicroseconds(PEN_DOWN_US);
   delay(200);
-  pen_down = true;
 }
 
 // ---------------- CoreXY diagonal move ----------------
@@ -253,12 +248,11 @@ void moveByAxisSteps(int32_t dxSteps, int32_t dySteps) {
     if (errR >= (int32_t)nMax) { errR -= (int32_t)nMax; stepR = true; }
 
     if (stepL && stepR) pulseBoth();
-    else if (stepL)     pulseOne(STEP_L);
-    else if (stepR)     pulseOne(STEP_R);
-    else                delayMicroseconds(step_low_delay_us);
+    else if (stepL) pulseOne(STEP_L);
+    else if (stepR) pulseOne(STEP_R);
+    else delayMicroseconds(step_low_delay_us);
   }
 
-  // Update position based on achieved motor steps -> axis steps
   int32_t dxAch = sL + sR;
   int32_t dyAch = sL - sR;
 
@@ -309,24 +303,17 @@ bool homeDown() {
   return false;
 }
 
-void doHome() {
+bool doHome() {
   penUp();
 
-  if (!homeLeft()) {
-    Serial.println("error: homing X failed");
-    stopped = true;
-    return;
-  }
-  if (!homeDown()) {
-    Serial.println("error: homing Y failed");
-    stopped = true;
-    return;
-  }
+  if (!homeLeft()) return false;
+  if (!homeDown()) return false;
 
   cur_x_mm = 0.0f;
   cur_y_mm = 0.0f;
 
   setFeedMmMin(FEED_TRAVEL_MM_MIN);
+  return true;
 }
 
 // ---------------- G-code parsing ----------------
@@ -411,36 +398,50 @@ void hardStop(const char *msg) {
   Serial.println(msg);
 }
 
+// Reset modal state between jobs (after M2/M30)
+void resetJobState() {
+  units_mm = false;
+  absolute_mode = false;
+  setFeedMmMin(FEED_TRAVEL_MM_MIN);
+  penUp();
+}
+
 // ---------------- Execute one parsed line ----------------
 void executeParsed(const ParsedLine &pl) {
-  // End job
-  if (pl.hasM && (pl.m == 2 || pl.m == 30)) {
-    penUp();
-    stopped = true;
-    Serial.println("ok");
-    return;
-  }
-
   // Unsupported meaning-changing modes
   if (pl.hasG && pl.g == 20) { hardStop("G20 inches unsupported"); return; }
   if (pl.hasG && pl.g == 91) { hardStop("G91 relative unsupported"); return; }
+
+  // End job: home and keep going
+  if (pl.hasM && (pl.m == 2 || pl.m == 30)) {
+    penUp();
+    if (!doHome()) {
+      hardStop("homing failed after M2/M30");
+      return;
+    }
+    resetJobState();
+    Serial.println("ok");
+    Serial.println("ready");
+    return;
+  }
 
   // Modal setup
   if (pl.hasG && pl.g == 21) units_mm = true;
   if (pl.hasG && pl.g == 90) absolute_mode = true;
 
-  // Tool commands
+  // Tool
   if (pl.hasM && pl.m == 3) penDown();
   if (pl.hasM && pl.m == 5) penUp();
 
   // Feedrate
   if (pl.hasF) setFeedMmMin(pl.f);
 
+  // Motion
   bool isG0 = (pl.hasG && pl.g == 0);
   bool isG1 = (pl.hasG && pl.g == 1);
 
   if (isG0 || isG1) {
-    if (!units_mm)      { hardStop("missing G21"); return; }
+    if (!units_mm) { hardStop("missing G21"); return; }
     if (!absolute_mode) { hardStop("missing G90"); return; }
 
     if (isG0) {
@@ -456,14 +457,13 @@ void executeParsed(const ParsedLine &pl) {
     if (pl.hasX) tx = pl.x;
     if (pl.hasY) ty = pl.y;
 
-    // Clamp to workspace
     tx = clampf(tx, 0.0f, X_MAX_MM);
     ty = clampf(ty, 0.0f, Y_MAX_MM);
 
     moveToMm(tx, ty);
   }
 
-  if (!stopped) Serial.println("ok");
+  Serial.println("ok");
 }
 
 // ---------------- Arduino ----------------
@@ -490,11 +490,15 @@ void setup() {
   setFeedMmMin(FEED_TRAVEL_MM_MIN);
   penUp();
 
-  doHome();
-  if (stopped) return;
+  if (!doHome()) {
+    hardStop("homing failed on boot");
+    return;
+  }
 
-  // Firmware is ready. File must send G21 + G90.
+  resetJobState();
+
   Serial.println("ok");
+  Serial.println("ready");
 }
 
 void loop() {
