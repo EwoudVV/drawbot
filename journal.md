@@ -96,3 +96,12 @@ created_at: "2025-05-25"
 
 **25/7/25** *time spent: 1hr*
  - I coded some code for the drawing machine. It homes it, then goes to coordinates specified in the serial monitor. [[commit](https://github.com/EwoudVV/drawbot/commit/557fd0dd407ad2a281d6dc4d6faa46b979bcdcc2)]
+
+**1/8/26** *time spent: long session*
+ - Debugged the "never reverses" bug: the Uno R4 core resets the output data register on `pinMode(OUTPUT)`, so every `digitalWrite`-then-`pinMode` write collapsed to LOW. All writes must be `pinMode` first, then `digitalWrite`.
+ - The CNC Shield V3.00 ENABLE net (D8) is direct and active-LOW (R1 pull-up, no inverter) — the old "inverted" assumption was wrong; fixed `DRIVER_ENABLE_ACTIVE_LEVEL = LOW`. There is no D13-to-RESET "R10" rail; MS pins only set stepping resolution.
+ - Corrected the CoreXY Y-sign convention for this machine's belt routing (A advances X-Y, B advances X+Y).
+ - **Commissioned the machine**: pen calibrated (500 us down / 1500 us up), scale verified (80.8 units/mm), manual homing via `M50`, 100 mm square drawn, and a **35-minute endurance run** (full-workspace cross-hatch) completed with zero BLE drops or errors.
+ - The bottom (Y-) limit switch never triggers on any header despite perfect continuity — decided to operate with manual homing.
+ - `stream_gcode.py` hardened: BLE drop recovery with M114 position reconciliation, 20-byte chunked writes with pacing, auto-M50 at start. `gen_stress_pattern.py` generates the cross-hatch presentation pattern.
+ - The Uno R4 now lives on the 0.5m square machine with the CNC shield; the original Uno R3 sketch is still in `code/`.
